@@ -1,0 +1,37 @@
+.wrapper{
+    width: 500px;
+    padding: 15px;
+    margin: 200px auto 0 auto;
+    border: 5px solid darkslateblue;
+    border-radius: 15px;
+    background-color: black;
+    text-align: center;
+}
+
+.counter{
+    font-size: 100px;
+    color: darkslateblue;
+}
+
+.buttons{
+    border: 5px solid darkslateblue;
+    border-radius: 15px;
+    padding: 35px;
+}
+
+.counterMaxvalue{
+    color: red;
+}
+
+.buttons button{
+    font-size: 40px;
+    padding: 10px 25px;
+    margin: 10px;
+    background-color: darkslateblue;
+    border: none;
+    border-radius: 5px;
+}
+
+.buttons button:disabled{
+    opacity: 0.5;
+}
