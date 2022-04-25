@@ -1,17 +1,14 @@
-import React, {useState} from 'react';
-import './App.css';
-import {Counter} from "./Counter";
+import React from 'react';
+import s from './App.module.css';
+import {CounterContainer} from "./Counter/CounterContainer";
 
 
 function App() {
 
-    const minValue = 0;
-    const maxValue = 5;
-
-    let[value, setValue] = useState<number>(minValue)
-
-    return(
-        <Counter value={value} setValue={setValue} minValue={minValue} maxValue={maxValue}/>
+    return (
+        <div>
+            <CounterContainer/>
+        </div>
     )
 }
 

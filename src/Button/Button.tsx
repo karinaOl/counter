@@ -1,3 +1,5 @@
+import s from "./Button.module.css";
+
 type ButtonType = {
     name: string
     onClick: ()=>void
@@ -10,6 +12,6 @@ export const Button  = (props: ButtonType) => {
       props.onClick()
     }
 
-    return <button onClick={onClickHandler} disabled={props.disabled}>{props.name}</button>
+    return <button className={s.button} onClick={onClickHandler} disabled={props.disabled}>{props.name}</button>
 
 }
