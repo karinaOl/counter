@@ -13,8 +13,6 @@ type SettingsType = {
 
 export const Settings = (props: SettingsType) => {
 
-
-
     return (
         <div className={s.wrapper}>
             <div className={s.settingsDisplay}>

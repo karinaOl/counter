@@ -2,24 +2,28 @@ import {Counter} from "./Counter";
 import React, {ChangeEvent, useEffect, useState} from "react";
 import {Settings} from "./Settings";
 import s from "./CounterContainer.module.css";
+import {useDispatch, useSelector} from "react-redux";
+import {increaseValue, resetValue, setErrorValue, setMaxValue, setMinValue} from "../store/counterReducer";
+import {RootAppStateType} from "../store/store";
 
 export const CounterContainer = () => {
-    const [minValue, setMinValue] = useState(0);
-    const [maxValue, setMaxValue] = useState(5);
 
-    let [value, setValue] = useState<number | string>(minValue)
+    const dispatch = useDispatch();
+    const minValue = useSelector<RootAppStateType, number>(state => state.counter.minValue)
+    const maxValue = useSelector<RootAppStateType, number>(state => state.counter.maxValue)
+    const value = useSelector<RootAppStateType, number | string>(state => state.counter.value)
 
     useEffect(() => {
         const minValueInLS = localStorage.getItem("counter_minValue");
         const maxValueInLS = localStorage.getItem("counter_maxValue");
         if(minValueInLS) {
             const minValueFromLS = JSON.parse(minValueInLS);
-            setMinValue(minValueFromLS);
-            setValue(minValueFromLS);
+            dispatch(setMinValue(minValueFromLS));
+            dispatch(resetValue());
         }
         if(maxValueInLS) {
             const maxValueFromLS = JSON.parse(maxValueInLS);
-            setMaxValue(maxValueFromLS);
+            dispatch(setMaxValue(maxValueFromLS));
         }
     }, []);
 
@@ -30,23 +34,32 @@ export const CounterContainer = () => {
 
     const changeSettings = (e: ChangeEvent<HTMLInputElement>) => {
         let currentValue = e.currentTarget.valueAsNumber
-        setValue("Set settings")
+        dispatch(setErrorValue("Set settings"))
         if (e.currentTarget.name === "minValue") {
             if (currentValue >= maxValue || currentValue < 0) {
-                setValue("Error")
+                dispatch(setErrorValue("Error"))
             }
-            setMinValue(currentValue)
+            dispatch(setMinValue(currentValue))
         }
         if (e.currentTarget.name === "maxValue") {
             if (currentValue <= minValue || minValue < 0) {
-                setValue("Error")
+                dispatch(setErrorValue("Error"))
             }
-            setMaxValue(currentValue)
+            dispatch(setMaxValue(currentValue))
         }
     }
 
+
+    const setValue = () => {
+        dispatch(resetValue())
+    }
+
+    const increaseCounter = () => {
+        dispatch(increaseValue())
+    }
+
     const setSettings = () => {
-        setValue(minValue)
+        dispatch(resetValue());
         saveSettingsToLS()
     }
 
@@ -65,7 +78,8 @@ export const CounterContainer = () => {
             />
             <Counter
                 value={value}
-                setValue={setValue}
+                resetValue={setValue}
+                increaseCounter={increaseCounter}
                 minValue={minValue}
                 maxValue={maxValue}
                 incButtonDisable={incButtonDisable}

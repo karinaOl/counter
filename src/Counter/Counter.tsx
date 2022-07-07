@@ -3,7 +3,8 @@ import s from './Counter.module.css'
 
 type CounterType = {
     value: number | string
-    setValue: (value: number) => void
+    resetValue: () => void
+    increaseCounter: () => void
     minValue: number
     maxValue: number
     incButtonDisable: boolean
@@ -14,12 +15,12 @@ export const Counter = (props: CounterType) => {
 
     const increasedValue = () => {
         if (props.value < props.maxValue && typeof props.value === "number") {
-            props.setValue(props.value + 1)
+            props.increaseCounter()
         }
     }
 
     const resetValue = () => {
-        props.setValue(props.minValue)
+        props.resetValue()
     }
 
 
